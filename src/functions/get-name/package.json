@@ -1,0 +1,16 @@
+{
+  "name": "get-name",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ../test/unit/*.test.js"
+  },
+  "keywords": [],
+  "author": "Dimitri Tarasowski <dimitri+npm@tarasowski.de>",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "lambda.lenses": "^1.0.0"
+  }
+}

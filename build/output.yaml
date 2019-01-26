@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CI / CD pipeline blueprint
+Globals:
+  Function:
+    MemorySize: 128
+    Runtime: nodejs8.10
+    Timeout: 5
+Parameters:
+  StackName:
+    Type: String
+  StageName:
+    AllowedValues:
+    - production
+    - staging
+    - development
+    Type: String
+Resources:
+  GetNameFunction:
+    Properties:
+      CodeUri: s3://get-name-stack-deployment-bucket/1faad09a67802cd73dabfee94a137d48
+      FunctionName:
+        Fn::Sub:
+        - getName-${_stack}-${_stage}
+        - _stack:
+            Ref: StackName
+          _stage:
+            Ref: StageName
+      Handler: handler
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31
