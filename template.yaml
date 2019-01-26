@@ -6,10 +6,9 @@ Parameters:
   StageName:
     Type: String
     AllowedValues:
-      - production
-      - staging
-      - development
-      - pre-push
+      - release ## every second week from the master branch a release will be created and pushed to this branch wich is === production
+      - master ## everyone pushes their code to the master, but before that the build gets verfied durin the pre-push phase
+      - pre-push ## this is a pre-push build, the infrastructure gets build before it gets pushed to master
   StackName:
     Type: String
 

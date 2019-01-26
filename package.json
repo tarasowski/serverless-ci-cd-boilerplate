@@ -5,14 +5,15 @@
   "main": "index.js",
   "scripts": {
     "pre": "hello",
-    "test": "node ./src/test/unit/*.test.js",
+    "test:unit": "node ./src/test/unit/*.test.js",
+    "test:integration": "echo \"Error: no test specified\" && exit 1",
+    "test:functional": "echo \"Error: no test specified\" && exit 1",
     "folder": "rm -rf build && mkdir build",
     "bucket": "aws s3api create-bucket --bucket get-name-stack-deployment-bucket --region eu-west-1 --create-bucket-configuration LocationConstraint=eu-west-1",
     "package": "aws cloudformation package --template-file template.yaml --output-template-file build/output.yaml --s3-bucket get-name-stack-deployment-bucket",
-    "deploy:development": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-development --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=development",
-    "deploy:staging": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-staging --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=staging",
-    "deploy:production": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-production --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=production",
-    "deploy:pre-push": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-pre-push --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=pre-push"
+    "deploy:pre-push": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-pre-push --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=pre-push",
+    "deploy:master": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-master --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=master",
+    "deploy:release": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-release --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=release"
   },
   "keywords": [],
   "author": "Dimitri Tarasowski <dimitri+npm@tarasowski.de>",
@@ -23,7 +24,7 @@
     "pre-push": "^0.1.1"
   },
   "pre-commit": [
-    "test"
+    "test:unit"
   ],
   "pre-push": [
     "deploy:pre-push"
