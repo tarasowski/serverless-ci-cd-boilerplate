@@ -6,14 +6,12 @@
   "scripts": {
     "disable:push": "echo \"Error: automate git push is disabled - please make sure that the version that was commited is working. \n If it's working push with flag --no-verify or add integration / functional tests.\" && exit 1",
     "test:unit": "node ./src/test/unit/*.test.js",
-    "test:integration": "echo \"\n\nWARNING: no test integration tests are specified\n\n\" && exit 0",
+    "test:integration": "echo \"\n\nWARNING: no integration tests are specified\n\n\" && exit 0",
     "test:functional": "echo \"\n\nWARNING: no functional tests are specified\n\n\" && exit 0",
     "folder": "rm -rf build && mkdir build",
     "bucket": "aws s3api create-bucket --bucket get-name-stack-deployment-bucket --region eu-west-1 --create-bucket-configuration LocationConstraint=eu-west-1",
     "package": "aws cloudformation package --template-file template.yaml --output-template-file build/output.yaml --s3-bucket get-name-stack-deployment-bucket",
-    "deploy:development": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-development --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=development",
-    "deploy:master": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-master --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=master",
-    "deploy:release": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-release --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=release"
+    "deploy:pre-push": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-Pre-Push --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=Pre-Push"
   },
   "keywords": [],
   "author": "Dimitri Tarasowski <dimitri+npm@tarasowski.de>",

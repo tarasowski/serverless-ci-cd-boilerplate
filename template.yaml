@@ -6,11 +6,14 @@ Parameters:
   StageName:
     Type: String
     AllowedValues:
-      - release ## every second week from the master branch a release will be created and pushed to this branch wich is === production. Starts only if git tag was pushed!
-      - master ## everyone pushes their code to the master, but before that the build gets verfied durin the pre-push phase
-      - development ## this is a pre-push build, the infrastructure gets build before it gets pushed to master
-  StackName:
+      - Production ## is the protected branch 
+      - Staging ## everyone pushes their code to the master
+      - Development ## used for testing after the build process
+      - Pre-Push ## before pushing the code to master developer verifies the version on his/her machine
+    Default: Pre-Push
+  ServiceName:
     Type: String
+    Default: Pre-Push-Test
 
 Globals:
   Function:
@@ -22,11 +25,11 @@ Resources:
   GetNameFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handler
+      Handler: index.handler
       CodeUri: src/functions/get-name/
       Description: Is a dummy function that does some simpe property plucking with lenses
       FunctionName: 
         Fn::Sub:
-          - getName-${_stack}-${_stage}
-          - {_stack: {Ref: StackName }, _stage: {Ref: StageName}}
+          - getName-${_service}-${_stage}
+          - {_service: {Ref: ServiceName }, _stage: {Ref: StageName}}
 
