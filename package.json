@@ -14,18 +14,19 @@
     "deploy:production": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-production --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=production",
     "deploy:pre-push": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-pre-push --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=pre-push"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm test",
-      "pre-push": "npm run deploy:pre-push"
-    }
-  },
   "keywords": [],
   "author": "Dimitri Tarasowski <dimitri+npm@tarasowski.de>",
   "license": "ISC",
   "devDependencies": {
     "expect.equal": "^1.0.1",
-    "husky": "^1.3.1"
+    "pre-commit": "^1.2.2",
+    "pre-push": "^0.1.1"
   },
+  "pre-commit": [
+    "test"
+  ],
+  "pre-push": [
+    "deploy:pre-push"
+  ],
   "dependencies": {}
 }
