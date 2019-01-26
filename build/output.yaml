@@ -12,12 +12,14 @@ Parameters:
     AllowedValues:
     - release
     - master
-    - pre-commit
+    - development
     Type: String
 Resources:
   GetNameFunction:
     Properties:
       CodeUri: s3://get-name-stack-deployment-bucket/1faad09a67802cd73dabfee94a137d48
+      Description: Is a dummy function that does some simpe property plucking with
+        lenses
       FunctionName:
         Fn::Sub:
         - getName-${_stack}-${_stage}
