@@ -9,6 +9,7 @@ Parameters:
       - production
       - staging
       - development
+      - pre-push
   StackName:
     Type: String
 

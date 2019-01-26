@@ -7,3 +7,8 @@ const testHandler = before => after =>
 
 
 testHandler({ name: 'Dimitri' })('Dimitri')
+
+const testHandlerFail = before => after =>
+    expect(handler(before)).toEqual(after)
+
+testHandler({ name: 'Anastasia' })('Anastasia')
