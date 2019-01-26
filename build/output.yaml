@@ -12,7 +12,7 @@ Parameters:
     AllowedValues:
     - release
     - master
-    - pre-push
+    - pre-commit
     Type: String
 Resources:
   GetNameFunction:

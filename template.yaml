@@ -6,9 +6,9 @@ Parameters:
   StageName:
     Type: String
     AllowedValues:
-      - release ## every second week from the master branch a release will be created and pushed to this branch wich is === production
+      - release ## every second week from the master branch a release will be created and pushed to this branch wich is === production. Starts only if git tag was pushed!
       - master ## everyone pushes their code to the master, but before that the build gets verfied durin the pre-push phase
-      - pre-commit ## this is a pre-push build, the infrastructure gets build before it gets pushed to master
+      - development ## this is a pre-push build, the infrastructure gets build before it gets pushed to master
   StackName:
     Type: String
 
@@ -24,6 +24,7 @@ Resources:
     Properties:
       Handler: handler
       CodeUri: src/functions/get-name/
+      Description: Is a dummy function that does some simpe property plucking with lenses
       FunctionName: 
         Fn::Sub:
           - getName-${_stack}-${_stage}

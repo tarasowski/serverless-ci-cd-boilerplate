@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "disable:push": "echo \"Error: automation git push is disabled - please make sure that the version that was commited is working\" && exit 1",
+    "disable:push": "echo \"Error: automate git push is disabled - please make sure that the version that was commited is working. \n If it's working push with flag --no-verify or add integration / functional tests.\" && exit 1",
     "test:unit": "node ./src/test/unit/*.test.js",
-    "test:integration": "echo \"Error: no test specified\" && exit 1",
-    "test:functional": "echo \"Error: no test specified\" && exit 1",
+    "test:integration": "echo \"Error: no test integration tests are specified\" && exit 0",
+    "test:functional": "echo \"Error: no functional tests are specified\" && exit 0",
     "folder": "rm -rf build && mkdir build",
     "bucket": "aws s3api create-bucket --bucket get-name-stack-deployment-bucket --region eu-west-1 --create-bucket-configuration LocationConstraint=eu-west-1",
     "package": "aws cloudformation package --template-file template.yaml --output-template-file build/output.yaml --s3-bucket get-name-stack-deployment-bucket",
-    "deploy:pre-commit": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-pre-commit --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=pre-commit",
+    "deploy:development": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-development --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=development",
     "deploy:master": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-master --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=master",
     "deploy:release": "npm run folder && npm run package && aws cloudformation deploy --template-file build/output.yaml --stack-name get-name-stack-release --capabilities CAPABILITY_NAMED_IAM --parameter-overrides StackName=get-name StageName=release"
   },
@@ -25,7 +25,9 @@
   },
   "pre-commit": [
     "test:unit",
-    "deploy:pre-commit"
+    "test:integration",
+    "deploy:development",
+    "test:functional"
   ],
   "pre-push": [
     "disable:push"
