@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "pre": "hello",
     "test": "node ./src/test/unit/*.test.js",
     "folder": "rm -rf build && mkdir build",
     "bucket": "aws s3api create-bucket --bucket get-name-stack-deployment-bucket --region eu-west-1 --create-bucket-configuration LocationConstraint=eu-west-1",
